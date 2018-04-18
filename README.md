@@ -6,7 +6,7 @@
 - A parser can click the "buy ticket" and go through identifier (not finished)
 
 ## Usage:
-`$ python3 request_time.py "target_url" -d minutes_to_track`
+`$ python3 estimate_server_time.py "target_url" -d minutes_to_track`
 
 ## Requirements:
 Python (3.6.5), requests (2.18.4)

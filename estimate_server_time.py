@@ -33,7 +33,7 @@ def request_time(target_url, tz='Asia/Taipei'):
 
     # offset to estimate server time
     offset = t1p - (t0 + duration / 2.0)
-    return offset
+    return offset, duration/2.0
 
 def url_validation(url):
     """ ref:https://stackoverflow.com/questions/7160737/python-how-to-validate-a-url-in-python-malformed-or-not
@@ -49,11 +49,12 @@ def url_validation(url):
     return re.match(regex, url) is not None
 
 
-def update_output(offset, min):
+def update_output(offset, err, min):
     """ Update server time every 30 ms
     """
     iters = int(min * 60 * 1000 / 30)
     start_t = time.time()
+    print('Offset between local and server: %.5f ms\nMaximum deviation time: %.5f' % (offset, err), end="\n", flush=True)
     print('--- Start Tracing Server Time for {} mins ---'.format(min), end='\n', flush=True)
     while iters:
         current_t = time.time()
@@ -61,7 +62,7 @@ def update_output(offset, min):
             continue
         else:
             server_ft = datetime.datetime.fromtimestamp(time.time() + offset).strftime('%d/%m/%Y %H:%M:%S.%f')
-            print("Server Time: " + server_ft, end="\r", flush=True)
+            print("Server Time: {}\t".format(server_ft), end="\r", flush=True)
             iters -= 1
             start_t = time.time()
     print(flush=True)
@@ -80,8 +81,8 @@ def main():
     # target_url = 'https://tixcraft.com/'
     # target_url = 'https://www.wikipedia.org/'
 
-    offset = request_time(args.url)
-    update_output(offset, args.duration)
+    offset, err = request_time(args.url)
+    update_output(offset, err, args.duration)
 
 if __name__ == '__main__':
     main()
