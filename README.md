@@ -1,9 +1,15 @@
 # Web Server Clock
 嘗試靠偵測遠端網站時間還準確按下購票
 
-Python 實作內容：
-- Use http client to get the time of server side
-- A parse can click the "buy ticket"
+Content:
+- Get server time and estimate it by local time (done)
+- A parser can click the "buy ticket" and go through identifier (not finished)
+
+Usage:
+`$ python3 request_time.py "target_url" -d how_long_you_want_to_track`
+
+Requirements:
+Python (3.6.5), requests (2.18.4)
 
 References:
 - 網路搶票小幫手[http://columns.chicken-house.net/2017/01/05/webserverclock-release/#release-notes]
